@@ -40,9 +40,9 @@ public class HomeFragment extends Fragment {
     }
 
     public void searchHotel(){
-        String destination= binding.destination.getText().toString();
+//        String destination= binding.destination.getText().toString();
         Intent intent= new Intent(getContext(), SearchResultActivity.class);
-        intent.putExtra("destination", destination);
+//        intent.putExtra("destination", destination);
         startActivity(intent);
     }
 

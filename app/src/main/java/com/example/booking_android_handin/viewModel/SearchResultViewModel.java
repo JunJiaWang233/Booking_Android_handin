@@ -21,13 +21,15 @@ public class SearchResultViewModel extends AndroidViewModel {
 
     private DatabaseReference databaseReference;
     private MutableLiveData<List<Hotel>> hotels= new MutableLiveData<>();
-    List<Hotel> hs= new ArrayList<>();
+    private List<Hotel> hs;
 
 
 
     public SearchResultViewModel(@NonNull Application application) {
         super(application);
         databaseReference= FirebaseDatabase.getInstance().getReference();
+        hs= new ArrayList<>();
+        hotels.setValue(hs);
         getAllHotels();
     }
 
@@ -61,8 +63,7 @@ public class SearchResultViewModel extends AndroidViewModel {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot ds:snapshot.getChildren()){
-                    hs.add(ds.getValue(Hotel.class));
-                    Log.e("02", hs.toString());
+                  hotels.getValue().add(ds.getValue(Hotel.class));
                 }
             }
 
@@ -71,9 +72,6 @@ public class SearchResultViewModel extends AndroidViewModel {
                 System.out.println("errorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
             }
         });
-
-        hotels.setValue(hs);
-        Log.e("03", hotels.getValue().toString());
 
     }
 

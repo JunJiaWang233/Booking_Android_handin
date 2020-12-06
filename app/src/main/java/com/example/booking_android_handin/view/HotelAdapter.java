@@ -3,6 +3,7 @@ package com.example.booking_android_handin.view;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -44,9 +45,10 @@ public class HotelAdapter extends RecyclerView.Adapter<HotelAdapter.ViewHolder> 
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView name;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            name= itemView.findViewById(R.id.tv_name);
+            name= itemView.findViewById(R.id.name);
         }
     }
 }

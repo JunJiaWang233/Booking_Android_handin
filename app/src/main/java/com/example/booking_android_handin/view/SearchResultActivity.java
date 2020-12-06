@@ -1,14 +1,18 @@
 package com.example.booking_android_handin.view;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
+import android.view.View;
 import android.widget.Toast;
 
 import com.example.booking_android_handin.R;
@@ -22,32 +26,31 @@ import java.util.List;
 public class SearchResultActivity extends AppCompatActivity {
     
     ActivitySearchResultBinding binding;
+
     SearchResultViewModel searchResultViewModel;
     String destination;
     HotelAdapter hotelAdapter;
-    List<Hotel> hs= new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding= DataBindingUtil.setContentView(this, R.layout.activity_search_result);
-        binding.setLifecycleOwner(this);
         searchResultViewModel= new ViewModelProvider(this).get(SearchResultViewModel.class);
+        binding.setLifecycleOwner(this);
 
-
-
-
-        binding.hotelList.hasFixedSize();
+//        binding.hotelList.hasFixedSize();
         binding.hotelList.setLayoutManager(new LinearLayoutManager(this));
+        hotelAdapter= new HotelAdapter(searchResultViewModel.getHotels().getValue());
+        binding.hotelList.setAdapter(hotelAdapter);
+
+
         searchResultViewModel.getHotels().observe(this, new Observer<List<Hotel>>() {
             @Override
             public void onChanged(List<Hotel> hotels) {
-               hs= hotels;
-               Log.e("01", hs.toString());
+               hotelAdapter= new HotelAdapter(hotels);
+                binding.hotelList.setAdapter(hotelAdapter);
             }
         });
 
-        hotelAdapter= new HotelAdapter(hs);
-        binding.hotelList.setAdapter(hotelAdapter);
     }
     
 //    public ArrayList<Hotel> searchHotel(){
@@ -59,6 +62,7 @@ public class SearchResultActivity extends AppCompatActivity {
 //        ArrayList<Hotel> hs= (ArrayList<Hotel>)hotels;
 //        return hs;
 //    }
+
 
 
 }
